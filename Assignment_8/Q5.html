@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Textarea with Word Count and Highlighting</title>
+    <style>
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h2>Textarea with Word Count and Highlighting</h2>
+    <textarea id="textInput" rows="10" cols="50"></textarea>
+    <div id="wordCount">Word Count: 0</div>
+    <script>
+        const textInput = document.getElementById('textInput');
+        const wordCount = document.getElementById('wordCount');
+
+        textInput.addEventListener('input', function () {
+            const text = textInput.value;
+            const words = text.split(/\s+/).filter(word => word.length > 0);
+            wordCount.textContent = 'Word Count: ' + words.length;
+            highlightRepeatedWords(text);
+        });
+
+        function highlightRepeatedWords(text) {
+            const words = text.split(/\s+/).filter(word => word.length > 0);
+            const wordMap = {};
+            words.forEach(word => {
+                wordMap[word] = (wordMap[word] || 0) + 1;
+            });
+
+            const highlightedText = words.map(word => {
+                if (wordMap[word] > 1) {
+                    return `<span class="highlight">${word}</span>`;
+                }
+                return word;
+            }).join(' ');
+
+            textInput.innerHTML = highlightedText;
+        }
+    </script>
+</body>
+</html>
