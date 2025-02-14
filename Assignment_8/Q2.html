@@ -1,0 +1,74 @@
+<html>
+<head>
+    <title>Form Validation with Live Feedback</title>
+    <style>
+        .invalid {
+            border: 1px solid red;
+        }
+        .valid {
+            border: 1px solid green;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" oninput="validateName()">
+        <span id="name-error"></span>
+        <br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" oninput="validateEmail()">
+        <span id="email-error"></span>
+        <br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" oninput="validatePassword()">
+        <span id="password-error"></span>
+    </form>
+
+    <script>
+        function validateName() {
+            const name = document.getElementById('name').value;
+            const nameError = document.getElementById('name-error');
+            if (name === '') {
+                nameError.innerHTML = 'Name cannot be empty';
+                document.getElementById('name').classList.remove('valid');
+                document.getElementById('name').classList.add('invalid');
+            } else {
+                nameError.innerHTML = '';
+                document.getElementById('name').classList.remove('invalid');
+                document.getElementById('name').classList.add('valid');
+            }
+        }
+
+        function validateEmail() {
+            const email = document.getElementById('email').value;
+            const emailError = document.getElementById('email-error');
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email)) {
+                emailError.innerHTML = 'Invalid email format';
+                document.getElementById('email').classList.remove('valid');
+                document.getElementById('email').classList.add('invalid');
+            } else {
+                emailError.innerHTML = '';
+                document.getElementById('email').classList.remove('invalid');
+                document.getElementById('email').classList.add('valid');
+            }
+        }
+
+        function validatePassword() {
+            const password = document.getElementById('password').value;
+            const passwordError = document.getElementById('password-error');
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+            if (!passwordRegex.test(password)) {
+                passwordError.innerHTML = 'Password must be at least 8 characters with 1 uppercase and 1 number';
+                document.getElementById('password').classList.remove('valid');
+                document.getElementById('password').classList.add('invalid');
+            } else {
+                passwordError.innerHTML = '';
+                document.getElementById('password').classList.remove('invalid');
+                document.getElementById('password').classList.add('valid');
+            }
+        }
+    </script>
+</body>
+</html>
