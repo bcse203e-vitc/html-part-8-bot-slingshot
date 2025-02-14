@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>Countdown Timer</title>
+</head>
+<body>
+    <input type="number" id="seconds" placeholder="Enter time in seconds">
+    <button id="start" onclick="startCountdown()">Start</button>
+    <p id="countdown"></p>
+
+    <script>
+        let intervalId;
+        const countdownElement = document.getElementById('countdown');
+
+        function startCountdown() {
+            const seconds = parseInt(document.getElementById('seconds').value);
+            let remainingTime = seconds;
+
+            intervalId = setInterval(() => {
+                const minutes = Math.floor(remainingTime / 60);
+                const seconds = remainingTime % 60;
+                countdownElement.innerHTML = `${padZero(minutes)}:${padZero(seconds)}`;
+                remainingTime--;
+
+                if (remainingTime < 0) {
+                    clearInterval(intervalId);
+                    countdownElement.innerHTML = 'Time\'s up!';
+                }
+            }, 1000);
+        }
+
+        function padZero(number) {
+            return (number < 10 ? '0' : '') + number;
+        }
+    </script>
+</body>
+</html>
